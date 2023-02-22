@@ -48,6 +48,7 @@ export class HomePage implements OnInit {
 
   searchTranslations() {
     const searchTerm = this.searchTerm.toLowerCase();
+    console.log(searchTerm);
     if (this.translations[searchTerm] === undefined){
       return this.kapampanganTranslations[searchTerm];
     }
