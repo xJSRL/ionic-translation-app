@@ -5,27 +5,23 @@
     </ion-buttons>
     <ion-title >Translate</ion-title>
   </ion-toolbar>
-  <ion-toolbar>
-    <ion-searchbar></ion-searchbar>
-  </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <div >
     <ion-item>
       <ion-label></ion-label>
-      <ion-input type="text" [(ngModel)] = "searchTerm" placeholder="Search"></ion-input>
+      
+      <ion-input type="text" [(ngModel)] = "searchTerm" placeholder="Search" (input)="searchTranslations()"></ion-input>
     </ion-item>
 
-    <div *ngFor="let word of translations | filterBy:searchTerm">
-      {{ word }} 
-    </div>
-    <!-- <ion-grid >
-      <ion-row>
-        <ion-col>{{word.key}}</ion-col>
-        <ion-col>{{word.value}}</ion-col>
-      </ion-row>
-    </ion-grid> -->
-
+    <ion-item *ngIf="searchTerm">
+      <ng-container *ngIf="searchTranslations(); else noResult">
+        {{ searchTerm | titlecase }} - {{ searchTranslations() | titlecase }}
+      </ng-container>
+      <ng-template #noResult>
+        No translations found for "{{ searchTerm }}"
+      </ng-template>
+    </ion-item>
   </div>
 </ion-content>

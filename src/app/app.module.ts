@@ -10,7 +10,7 @@ import { FilterPipeModule } from 'ngx-filter-pipe';
 import { FilterPipe } from 'ngx-filter-pipe';
 
 @NgModule({
-  declarations: [AppComponent, FilterPipe],
+  declarations: [AppComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

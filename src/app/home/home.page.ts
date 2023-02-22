@@ -2,31 +2,32 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import * as Papa from 'papaparse'; //npm install papaparse 
 import { Translate } from './translate';
-import { FilterPipe } from 'ngx-filter-pipe';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
-  providers: [FilterPipe]
 })
 export class HomePage implements OnInit {
   public home!: string;
   searchTerm: string = '';
+
   public translations: { [key: string]: string } = {};
-  arr_translations = [];
+  public kapampanganTranslations: { [key: string]: string } = {};
+
   constructor(
     private activatedRoute: ActivatedRoute,
-    private filterPipe: FilterPipe
-    ) {
-
-     }
+    
+    ) {}
 
   ngOnInit() {
     this.home = this.activatedRoute.snapshot.paramMap.get('id') as string;
     this.parseCSV();
   }
+  ngOnChanges(){
 
+  }
+  
   //this will convert csv to json 
   parseCSV() {
     const csvFilePath = '/assets/translate.csv';  
@@ -36,24 +37,23 @@ export class HomePage implements OnInit {
       complete: (results) => {
         const data = results.data as Translate[];
         data.forEach(row => {
-          const word = row.TAGALOG;
-          const translation = row.KAPAMPANGAN;
-          this.translations[word] = translation;
-          this.translations[translation] = word;
+          const tagalogWord = row.TAGALOG;
+          const kapampanganWord = row.KAPAMPANGAN;
+          this.translations[tagalogWord] = kapampanganWord;
+          this.kapampanganTranslations[kapampanganWord] = tagalogWord;
         });
-        console.log(this.translations);
       }
     });
   }
 
-  public filterData() {
-    let filteredObject = {};
-    Object.keys(this.translations).forEach((key) => {
-        if (this.translations[key].toLowerCase().includes(this.searchTerm.toLowerCase())) {
-            filteredObject[key] = this.translations[key];
-        }
-    });
-    return filteredObject;
-}
+  searchTranslations() {
+    const searchTerm = this.searchTerm.toLowerCase();
+    if (this.translations[searchTerm] === undefined){
+      return this.kapampanganTranslations[searchTerm];
+    }
+    else{
+      return this.translations[searchTerm];
+    }
+  }
 
 }

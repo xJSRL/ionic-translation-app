@@ -9,18 +9,18 @@ exports.__esModule = true;
 exports.HomePage = void 0;
 var core_1 = require("@angular/core");
 var Papa = require("papaparse"); //npm install papaparse 
-var ngx_filter_pipe_1 = require("ngx-filter-pipe");
 var HomePage = /** @class */ (function () {
-    function HomePage(activatedRoute, filterPipe) {
+    function HomePage(activatedRoute) {
         this.activatedRoute = activatedRoute;
-        this.filterPipe = filterPipe;
         this.searchTerm = '';
         this.translations = {};
-        this.arr_translations = [];
+        this.kapampanganTranslations = {};
     }
     HomePage.prototype.ngOnInit = function () {
         this.home = this.activatedRoute.snapshot.paramMap.get('id');
         this.parseCSV();
+    };
+    HomePage.prototype.ngOnChanges = function () {
     };
     //this will convert csv to json 
     HomePage.prototype.parseCSV = function () {
@@ -32,31 +32,28 @@ var HomePage = /** @class */ (function () {
             complete: function (results) {
                 var data = results.data;
                 data.forEach(function (row) {
-                    var word = row.TAGALOG;
-                    var translation = row.KAPAMPANGAN;
-                    _this.translations[word] = translation;
-                    _this.translations[translation] = word;
+                    var tagalogWord = row.TAGALOG;
+                    var kapampanganWord = row.KAPAMPANGAN;
+                    _this.translations[tagalogWord] = kapampanganWord;
+                    _this.kapampanganTranslations[kapampanganWord] = tagalogWord;
                 });
-                console.log(_this.translations);
             }
         });
     };
-    HomePage.prototype.filterData = function () {
-        var _this = this;
-        var filteredObject = {};
-        Object.keys(this.translations).forEach(function (key) {
-            if (_this.translations[key].toLowerCase().includes(_this.searchTerm.toLowerCase())) {
-                filteredObject[key] = _this.translations[key];
-            }
-        });
-        return filteredObject;
+    HomePage.prototype.searchTranslations = function () {
+        var searchTerm = this.searchTerm.toLowerCase();
+        if (this.translations[searchTerm] === undefined) {
+            return this.kapampanganTranslations[searchTerm];
+        }
+        else {
+            return this.translations[searchTerm];
+        }
     };
     HomePage = __decorate([
         core_1.Component({
             selector: 'app-home',
             templateUrl: './home.page.html',
-            styleUrls: ['./home.page.scss'],
-            providers: [ngx_filter_pipe_1.FilterPipe]
+            styleUrls: ['./home.page.scss']
         })
     ], HomePage);
     return HomePage;

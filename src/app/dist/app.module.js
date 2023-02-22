@@ -13,13 +13,12 @@ var router_1 = require("@angular/router");
 var angular_1 = require("@ionic/angular");
 var app_component_1 = require("./app.component");
 var app_routing_module_1 = require("./app-routing.module");
-var ngx_filter_pipe_1 = require("ngx-filter-pipe");
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
     AppModule = __decorate([
         core_1.NgModule({
-            declarations: [app_component_1.AppComponent, ngx_filter_pipe_1.FilterPipe],
+            declarations: [app_component_1.AppComponent],
             imports: [platform_browser_1.BrowserModule, angular_1.IonicModule.forRoot(), app_routing_module_1.AppRoutingModule,],
             providers: [{ provide: router_1.RouteReuseStrategy, useClass: angular_1.IonicRouteStrategy }],
             bootstrap: [app_component_1.AppComponent]
