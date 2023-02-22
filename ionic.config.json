@@ -1,0 +1,7 @@
+{
+  "name": "Translation Mobile App",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
