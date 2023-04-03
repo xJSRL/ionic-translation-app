@@ -17,6 +17,5 @@ npm i -g @ionic/cli
 ## Usage
 
 Clone the project and do `npm i` from the root folder.
-Or download this [zip](https://www35.zippyshare.com/v/njT7N13v/file.html).
 
 Run the project using `ionic serve`
